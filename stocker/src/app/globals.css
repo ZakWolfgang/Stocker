@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #EFF2EF;
+}
+
+.halfBackground {
+  height: 50vh;
+  background-color: #331832;
+}
+
+
