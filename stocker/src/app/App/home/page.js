@@ -1,10 +1,10 @@
 'use client'
-import TopNav from "@/app/components/TopNav"
+import Header from "@/app/components/Header"
 
 const Page = () => {
     return (
         <div>
-            <TopNav />
+            <Header />
         </div>
 
     )
