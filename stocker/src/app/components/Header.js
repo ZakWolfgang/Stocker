@@ -8,9 +8,7 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import InputBase from "@mui/material/InputBase";
@@ -63,6 +61,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const BASE_URL = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tesco&apikey=demo";
+const apiKey = "LX88RKA4AYN2B6C1"; 
+
+export const getSearchData = async (ticker) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/?token=${apiKey}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching stock data:", error);
+    throw error;
+  }
+};
+
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -75,7 +91,7 @@ function Header() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#331832", height: '70vh' }}>
+    <AppBar position="static" sx={{ backgroundColor: "#331832" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
