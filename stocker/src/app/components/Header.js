@@ -17,7 +17,7 @@ import { styled, alpha } from "@mui/material/styles";
 
 import header from './header.css'
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["STOCK MARKET", "CRYPTO", "NEWS"];
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

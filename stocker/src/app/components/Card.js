@@ -4,11 +4,12 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+
 
 const BASE_URL = "https://api.tiingo.com/iex";
-const apiKey = "ac2196ed8f72aa12313fdb86a5f246f777444b2c";
 
-async function getStockData(ticker) {
+async function getStockData(ticker, apiKey) {
   try {
     const response = await axios.get(`${BASE_URL}/${ticker}?token=${apiKey}`);
     console.log(response.data)
@@ -19,34 +20,35 @@ async function getStockData(ticker) {
   }
 }
 
-const tickers = ["AAPL", "GOOGL", "MSFT"];
-
-export default function BasicCard() {
+export default function BasicCard({ tickers, apiKey, title }) {
   const [responses, setResponses] = React.useState(null);
 
   React.useEffect(() => {
-    Promise.all(tickers.map((ticker) => getStockData(ticker)))
+    Promise.all(tickers.map((ticker) => getStockData(ticker, apiKey)))
       .then((data) => setResponses(data))
       .catch((error) => console.error("Error fetching stock data:", error));
-  }, []);
+  }, [tickers, apiKey]);
 
   return (
-    <Card sx={{ width: "80%", borderRadius: 5 }}>
-      <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Stock Data
+    <Card sx={{ width: "100%", borderRadius: 5, marginBottom: '3vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <CardContent sx={{ padding: 0 }}>
+        <Typography variant="subtitle1" component="div" sx={{ padding: '16px', fontWeight: 'bold', fontSize: '2vh' }}>
+          {title}
         </Typography>
-        {responses ? (
-          responses.map((response, index) => (
-            <Typography key={index} variant="body2">
-              {response[0].ticker}: ${response[0].tngoLast}
+        <Divider />
+        <Box sx={{ padding: '16px' }}>
+          {responses ? (
+            responses.map((response, index) => (
+              <Typography key={index} variant="body2">
+                {response[0].ticker}: ${response[0].tngoLast}
+              </Typography>
+            ))
+          ) : (
+            <Typography variant="h5" component="div" sx={{ textAlign: 'center'}}>
+              Loading...
             </Typography>
-          ))
-        ) : (
-          <Typography variant="h5" component="div">
-            Loading...
-          </Typography>
-        )}
+          )}
+        </Box>
       </CardContent>
     </Card>
   );
